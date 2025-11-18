@@ -1,0 +1,195 @@
+
+{
+  "appName": "TBB_Client_Portal",
+  "version": "1.0.0",
+  "description": "A detailed task breakdown for creating the TBB Client Portal with a multi-project, role-based architecture.",
+  "epics": [
+    {
+      "epicName": "Phase 1: Project Setup & Database Architecture",
+      "description": "Foundation of the project including environment setup and database schema design.",
+      "features": [
+        {
+          "feature": "Initial Project Setup",
+          "tasks": [
+            { "task": "Initialize Next.js 14+ project with TypeScript", "description": "Run `npx create-next-app@latest --typescript`.", "status": "✅ COMPLETED", "completedDate": "2025-07-24" },
+            { "task": "Setup Tailwind CSS", "description": "Follow the official Next.js guide for Tailwind integration.", "status": "✅ COMPLETED", "completedDate": "2025-07-24" },
+            { "task": "Initialize shadcn/ui", "description": "Run `npx shadcn-ui@latest init` and configure basic theme settings.", "status": "✅ COMPLETED", "completedDate": "2025-07-24" },
+            { "task": "Setup Git and push to GitHub repository", "description": "Create a new repository and push the initial project structure.", "status": "✅ COMPLETED", "completedDate": "2025-07-24" }
+          ]
+        },
+        {
+          "feature": "Core UI Components & Layout",
+          "tasks": [
+            { "task": "Create Navigation Component", "description": "Build responsive navbar with mobile hamburger menu and role-based navigation links.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Created Navbaar.tsx with Sheet-based mobile menu and TBB Portal branding" },
+            { "task": "Create Footer Component", "description": "Build footer with company info, links, and social media icons.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Created Footer.tsx with comprehensive footer layout" },
+            { "task": "Implement Theme Provider & Toggle", "description": "Setup dark/light mode switching with next-themes.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Created theme-provider.tsx and theme-toggle.tsx" },
+            { "task": "Create Home Page Layout", "description": "Transform landing page to reflect TBB Portal branding and messaging.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Updated src/app/page.tsx with TBB-specific content and call-to-action" },
+            { "task": "Setup Dashboard Layout Structure", "description": "Create layout wrapper for dashboard pages with role-based routing.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Created src/app/dashboard/layout.tsx and page.tsx with redirect logic" }
+          ]
+        },
+        {
+          "feature": "Database Schema Design (using Prisma ORM)",
+          "tasks": [
+            { "task": "Setup PostgreSQL database", "description": "Use Vercel Postgres or another provider like Supabase.", "status": "❌ TODO" },
+            { "task": "Initialize Prisma in the project", "description": "Run `npx prisma init` and connect to the database.", "status": "❌ TODO" },
+            { "task": "Define `User` model", "description": "Schema should include id, name, email, password, role (SUPER_ADMIN, TBB_STAFF, CLIENT), and timestamps.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined in src/types/index.ts" },
+            { "task": "Define `Project` model", "description": "Schema should include id, name, description, and timestamps.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined in src/types/index.ts" },
+            { "task": "Define `UsersOnProjects` join model", "description": "A many-to-many relation table linking TBB Staff (`userId`) to `projectId`.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined in src/types/index.ts" },
+            { "task": "Define `Client` model", "description": "This could be part of the User model (role=CLIENT) but needs a direct relation to one Project (`projectId`).", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Integrated into User model with role-based access" },
+            { "task": "Define `QuestionThread` model", "description": "Schema with id, title, status (OPEN, CLOSED), `projectId`, `clientId`, and timestamps.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined as Question interface" },
+            { "task": "Define `Message` model", "description": "Schema with id, content, `threadId`, `senderId`, and timestamps.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined in src/types/index.ts" },
+            { "task": "Define `Appointment` model", "description": "Schema with id, `clientId`, `tbbStaffId`, `projectId`, startTime, endTime, googleMeetLink, status (CONFIRMED, CANCELLED).", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined as Meeting interface" },
+            { "task": "Define `TBBStaffAvailability` model", "description": "Schema with id, `tbbStaffId`, dayOfWeek, startTime, endTime.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined as WorkingHours interface" },
+            { "task": "Define `Invitation` model", "description": "Schema to store invitation tokens for new clients, including email, `projectId`, token, and expiry.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "TypeScript types defined as ClientInvitation interface" },
+            { "task": "Run initial database migration", "description": "Execute `npx prisma migrate dev` to create the tables in the database.", "status": "❌ TODO", "note": "Pending Prisma setup" }
+          ]
+        }
+      ]
+    },
+    {
+      "epicName": "Phase 2: Authentication & Role-Based Access",
+      "description": "Implementing user login, invitations, and securing the application based on user roles.",
+      "features": [
+        {
+          "feature": "Core Authentication with Auth.js",
+          "tasks": [
+            { "task": "Install Auth.js (v5)", "description": "Add the necessary packages for Next.js authentication.", "status": "❌ TODO" },
+            { "task": "Create the main `[...nextauth]` route handler", "description": "Setup the core Auth.js configuration file.", "status": "❌ TODO" },
+            { "task": "Implement `CredentialsProvider` for Email/Password login", "description": "Write the logic to validate user credentials against the database.", "status": "❌ TODO" },
+            { "task": "Create the Login UI", "description": "Build the `/login` page with email and password fields using shadcn/ui components.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Login page created at src/app/login/page.tsx with TBB branding" },
+            { "task": "Implement Session Provider", "description": "Wrap the application in `<SessionProvider>` to make session data available globally.", "status": "❌ TODO" },
+            { "task": "Create Logout functionality", "description": "Implement a button/link that calls the `signOut()` function.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "Client Invitation System",
+          "tasks": [
+            { "task": "Create API endpoint for sending invitations", "description": "An admin-only route that generates a unique token, saves it to the `Invitation` table, and sends an email.", "status": "❌ TODO" },
+            { "task": "Integrate an email service (Resend)", "description": "Setup Resend and create the invitation email template.", "status": "❌ TODO" },
+            { "task": "Create the Client Sign-Up page", "description": "A page (`/signup?token=...`) that verifies the token from the URL.", "status": "❌ TODO" },
+            { "task": "Implement the Sign-Up form logic", "description": "Allow the invited user to set their name and password, then create their `User` record.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "Role-Based Access Control (RBAC)",
+          "tasks": [
+            { "task": "Create Next.js Middleware (`middleware.ts`)", "description": "Protect routes based on user role. e.g., `/superadmin/*` requires SUPER_ADMIN role.", "status": "❌ TODO" },
+            { "task": "Implement backend authorization checks", "description": "In every API route, verify that the user has permission to access/modify the requested resource (e.g., check if TBB Staff is in the project).", "status": "❌ TODO" },
+            { "task": "Implement frontend conditional rendering", "description": "Use the session data to show/hide UI elements based on the user's role and permissions.", "status": "🔄 PARTIALLY COMPLETE", "note": "Role-based navigation structure created but authentication integration pending" }
+          ]
+        }
+      ]
+    },
+    {
+      "epicName": "Phase 3: Super Admin Module",
+      "description": "Features exclusively for the Super Admin to manage the entire platform.",
+      "features": [
+        {
+          "feature": "Project Management",
+          "tasks": [
+            { "task": "Create UI for Project List", "description": "A page at `/superadmin/projects` to display a table of all projects.", "status": "❌ TODO" },
+            { "task": "Create UI for New Project Form", "description": "A modal or separate page to create a new project with a name and description.", "status": "❌ TODO" },
+            { "task": "Create API route for `POST /api/projects`", "description": "Handles the creation of new projects.", "status": "❌ TODO" },
+            { "task": "Create API route for `GET /api/projects`", "description": "Fetches all projects for the list view.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "User Management within Projects",
+          "tasks": [
+            { "task": "Create UI for Project Detail page", "description": "A page at `/superadmin/projects/[id]` with tabs for TBB Staff and Clients.", "status": "❌ TODO" },
+            { "task": "Implement 'Add TBB Staff to Project' UI/Logic", "description": "A search/select component to find existing TBB Staff and add them to the current project.", "status": "❌ TODO" },
+            { "task": "Create API route for `POST /api/projects/[id]/staff`", "description": "Adds a staff member to a project via the `UsersOnProjects` table.", "status": "❌ TODO" },
+            { "task": "Implement 'Invite Client to Project' UI/Logic", "description": "A form to enter a client's email, which calls the invitation API.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "Global Dashboard",
+          "tasks": [
+            { "task": "Create UI for Super Admin Dashboard", "description": "A page at `/superadmin/dashboard` showing high-level stats (total projects, users, meetings).", "status": "❌ TODO" },
+            { "task": "Create API routes to aggregate global data", "description": "Endpoints that query across all projects to generate analytics.", "status": "❌ TODO" }
+          ]
+        }
+      ]
+    },
+    {
+      "epicName": "Phase 4: TBB Staff Module",
+      "description": "Features for TBB Staff to interact with clients and manage their schedules within assigned projects.",
+      "features": [
+        {
+          "feature": "Project-Scoped Dashboard",
+          "tasks": [
+            { "task": "Create UI for TBB Staff Dashboard", "description": "The main page at `/admin/dashboard`.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Created at src/app/dashboard/staff/page.tsx with comprehensive dashboard UI" },
+            { "task": "Implement Project Selector Dropdown", "description": "Allow staff who are in multiple projects to switch context.", "status": "❌ TODO" },
+            { "task": "Display project-specific stats", "description": "Show new Q&As and upcoming meetings for the currently selected project.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Stats cards implemented in staff dashboard" },
+            { "task": "Create API route for `GET /api/staff/dashboard-stats`", "description": "Fetches data for a specific TBB Staff member and `projectId`.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "Q&A Management",
+          "tasks": [
+            { "task": "Create UI for Q&A list", "description": "A page at `/admin/qna` showing a table of question threads for the selected project.", "status": "❌ TODO" },
+            { "task": "Create UI for a single Q&A thread view", "description": "A chat-like interface to read the conversation and post a reply.", "status": "❌ TODO" },
+            { "task": "Create API route to fetch Q&A threads", "description": "`GET /api/qna?projectId=[id]`.", "status": "❌ TODO" },
+            { "task": "Create API route to post a message", "description": "`POST /api/qna/[threadId]/messages`.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "Availability & Google Calendar Sync",
+          "tasks": [
+            { "task": "Create UI for Availability Settings", "description": "A page at `/admin/availability` with a weekly schedule form.", "status": "❌ TODO" },
+            { "task": "Create API routes to manage availability", "description": "`GET` and `POST` routes for `/api/availability`.", "status": "❌ TODO" },
+            { "task": "Implement Google OAuth flow for TBB Staff", "description": "A button on the settings page to connect their Google Account to sync their calendar.", "status": "❌ TODO" },
+            { "task": "Securely store Google API refresh tokens", "description": "Save the token against the TBB Staff user record in the database.", "status": "❌ TODO" }
+          ]
+        }
+      ]
+    },
+    {
+      "epicName": "Phase 5: Client Module",
+      "description": "Features for the end-clients of TBB to ask questions and book meetings.",
+      "features": [
+        {
+          "feature": "Client Dashboard",
+          "tasks": [
+            { "task": "Create UI for Client Dashboard", "description": "The page at `/dashboard` showing their upcoming meetings and recent questions.", "status": "✅ COMPLETED", "completedDate": "2025-07-24", "note": "Created at src/app/dashboard/client/page.tsx with dashboard UI including quick actions and activity cards" },
+            { "task": "Implement 'Book a Meeting' button logic", "description": "Links to the booking page for their assigned project.", "status": "🔄 PARTIALLY COMPLETE", "note": "UI element created but booking flow not implemented" },
+            { "task": "Implement 'Ask a Question' button logic", "description": "Opens a modal or links to the support page to create a new question thread.", "status": "🔄 PARTIALLY COMPLETE", "note": "UI element created but Q&A functionality not implemented" }
+          ]
+        },
+        {
+          "feature": "Meeting Booking Flow",
+          "tasks": [
+            { "task": "Create UI for the scheduling page", "description": "A calendar/time-slot picker UI.", "status": "❌ TODO" },
+            { "task": "Create API to fetch availability", "description": "An endpoint that gets available slots for all TBB Staff within the client's project.", "status": "❌ TODO" },
+            { "task": "Create API to book an appointment", "description": "`POST /api/appointments`.", "status": "❌ TODO" },
+            { "task": "Trigger Google Calendar event creation", "description": "The booking API should call a service to use the TBB staff's Google token to create the event and Meet link.", "status": "❌ TODO" },
+            { "task": "Trigger confirmation emails", "description": "Send confirmation to both client and TBB staff member via Resend.", "status": "❌ TODO" }
+          ]
+        },
+        {
+          "feature": "Client Q&A Interaction",
+          "tasks": [
+            { "task": "Create UI for Client Q&A page", "description": "A page at `/dashboard/support` to view their thread history.", "status": "❌ TODO" },
+            { "task": "Implement UI for submitting a new question", "description": "A simple form with a title and message body.", "status": "❌ TODO" },
+            { "task": "Create API route for `POST /api/qna`", "description": "Handles submission of a new question thread, automatically linking their `clientId` and `projectId`.", "status": "❌ TODO" }
+          ]
+        }
+      ]
+    },
+    {
+      "epicName": "Phase 6: Deployment & Finalization",
+      "description": "Preparing the application for production.",
+      "features": [
+        {
+          "feature": "Deployment",
+          "tasks": [
+            { "task": "Create a new project on Vercel", "description": "Link the GitHub repository for automatic deployments.", "status": "❌ TODO" },
+            { "task": "Configure all environment variables in Vercel", "description": "Add `DATABASE_URL`, `NEXTAUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `RESEND_API_KEY`, etc.", "status": "❌ TODO" },
+            { "task": "Run production database migrations", "description": "Ensure the Vercel Postgres instance has the correct schema.", "status": "❌ TODO" },
+            { "task": "Configure custom domain", "description": "If applicable, point a custom domain to the Vercel project.", "status": "❌ TODO" }
+          ]
+        }
+      ]
+    }
+  ]
+}

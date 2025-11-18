@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://appointmenthub.vercel.app/sitemap.xml
+
+# Sitemaps
+Sitemap: https://appointmenthub.vercel.app/sitemap.xml/sitemap.xml
